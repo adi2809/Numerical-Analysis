@@ -1,0 +1,80 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage{fullpage}
+\usepackage[top=2cm, bottom=4.5cm, left=2.5cm, right=2.5cm]{geometry}
+\usepackage{amsmath,amsthm,amsfonts,amssymb,amscd}
+\usepackage{lastpage}
+\usepackage{enumerate}
+\usepackage{fancyhdr}
+\usepackage{mathrsfs}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{hyperref}
+
+\hypersetup{%
+  colorlinks=true,
+  linkcolor=blue,
+  linkbordercolor={0 0 1}
+}
+ 
+\renewcommand\lstlistingname{Algorithm}
+\renewcommand\lstlistlistingname{Algorithms}
+\def\lstlistingautorefname{Alg.}
+
+\lstdefinestyle{Python}{
+    language        = Python,
+    frame           = lines, 
+    basicstyle      = \footnotesize,
+    keywordstyle    = \color{blue},
+    stringstyle     = \color{green},
+    commentstyle    = \color{red}\ttfamily
+}
+
+\setlength{\parindent}{0.0in}
+\setlength{\parskip}{0.05in}
+
+% Edit these as appropriate
+\newcommand\course{APL 452}
+\newcommand\hwnumber{1}                  % <-- homework number
+\newcommand\NetIDa{2019ME10770}           % <-- NetID of person #1
+\newcommand\NetIDb{Aditya Shankar Garg}           % <-- NetID of person #2 (Comment this line out for problem sets)
+
+\pagestyle{fancyplain}
+\headheight 35pt
+\lhead{\NetIDa}
+\lhead{\NetIDa\\\NetIDb}                 % <-- Comment this line out for problem sets (make sure you are person #1)
+\chead{\textbf{\Large Homework \hwnumber}}
+\rhead{\course \\ \today}
+\lfoot{}
+\cfoot{}
+\rfoot{\small\thepage}
+\headsep 1.5em
+
+\begin{document}
+
+\section*{Problem 3}
+
+
+\begin{enumerate}
+  \item
+  \textbf{derive the expression for $s=4$ backward differentiation method}
+  \newline
+  \newline
+   to derive the scheme we need to find $\beta$ which is given by the following expression : 
+   \[\beta = \frac{1}{\sum \frac{1}{m}} = \frac{1}{1+\frac{1}{2}+\frac{1}{3}+\frac{1}{4}} = \frac{12}{25}\]
+  now we need to write the polynomial that will denote the left hand side of the scheme (also known as the characteristic polynomial).
+  \[\rho(w) = \frac{12}{25} \left( w^3(w-1) + \frac{1}{2} w^2 (w-1)^2 + \frac{1}{3} w (w-1)^3 + \frac{1}{4} (w-1)^4\right)    \]
+  \[ = w^4 - \frac{48}{25} w^3 + \frac{36}{25}w^2+ \frac{16}{25} w +\frac{3}{25}\]
+  hence the left hand side of the scheme can be written as the following explicit formulae: 
+  \[  y_{n+4} - \frac{48}{25} y_{n+3} + \frac{36}{25}y_{n+2}+ \frac{16}{25} y_{n+1} +\frac{3}{25} y_{n}\]
+  also the right hand side of the scheme can be written as the following explicit formulae: 
+  \[\frac{12}{25} h f(t_{n+4}, y_{n+4})\]
+  
+  the total scheme is given by the following formulae : 
+   \[  y_{n+4} - \frac{48}{25} y_{n+3} + \frac{36}{25}y_{n+2}+ \frac{16}{25} y_{n+1} +\frac{3}{25} y_{n} = \frac{12}{25} h f(t_{n+4}, y_{n+4})\]
+\end{enumerate}
+
+
+
+
+\end{document}

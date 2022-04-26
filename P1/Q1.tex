@@ -1,0 +1,113 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage{fullpage}
+\usepackage[top=2cm, bottom=4.5cm, left=2.5cm, right=2.5cm]{geometry}
+\usepackage{amsmath,amsthm,amsfonts,amssymb,amscd}
+\usepackage{lastpage}
+\usepackage{enumerate}
+\usepackage{fancyhdr}
+\usepackage{mathrsfs}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{hyperref}
+
+\hypersetup{%
+  colorlinks=true,
+  linkcolor=blue,
+  linkbordercolor={0 0 1}
+}
+ 
+\renewcommand\lstlistingname{Algorithm}
+\renewcommand\lstlistlistingname{Algorithms}
+\def\lstlistingautorefname{Alg.}
+
+\lstdefinestyle{Python}{
+    language        = Python,
+    frame           = lines, 
+    basicstyle      = \footnotesize,
+    keywordstyle    = \color{blue},
+    stringstyle     = \color{green},
+    commentstyle    = \color{red}\ttfamily
+}
+
+\setlength{\parindent}{0.0in}
+\setlength{\parskip}{0.05in}
+
+% Edit these as appropriate
+\newcommand\course{APL 452}
+\newcommand\hwnumber{1}                  % <-- homework number
+\newcommand\NetIDa{2019ME10770}           % <-- NetID of person #1
+\newcommand\NetIDb{Aditya Shankar Garg}           % <-- NetID of person #2 (Comment this line out for problem sets)
+
+\pagestyle{fancyplain}
+\headheight 35pt
+\lhead{\NetIDa}
+\lhead{\NetIDa\\\NetIDb}                 % <-- Comment this line out for problem sets (make sure you are person #1)
+\chead{\textbf{\Large Homework \hwnumber}}
+\rhead{\course \\ \today}
+\lfoot{}
+\cfoot{}
+\rfoot{\small\thepage}
+\headsep 1.5em
+
+\begin{document}
+
+\section*{Problem 1}
+
+\textbf{for an ode of the form $y'(t) = f(t, y)$, where $f(t,y)$ is a sufficiently well behaved function we say that the non-adaptive numerical integration scheme has order p if :}
+
+\[ y(t_{n+1}) - y(f, h, y(t_0), ..., y(t_{n})) = O(h^{p+1})\]
+
+\textbf{where $h$ is the time step and the time span is given by $t \in [t_0, t_n]$}
+\begin{enumerate}
+  \item
+   \textbf{prove that the $m^{th}$ taylor expansion has an order of $m \, \forall \, m \in \{1, 2,...\}$.} 
+   \newline
+   \newline
+   for this we consider the expansion of the function $y(t)$ around $t_n$ we have the following relation 
+   \[y(t_{n+1})= y(t_n+h) = y(t_n) + h y'(t_n) + \frac{h^2}{2!} y''(t_n)+...+\frac{h^m}{m!}y^{(m)}(t_n) + \frac{h^{m+1}}{(m+1)!}y^{(m+1)}(\xi)\]
+   for some $\xi$ such that $t_n \leq \xi \leq t_{n+1}$ ; if we transpose all the terms except the residual error term and take the modulus of both sides we have the following equation for the error as : 
+   \[ e_{n+1} = h^{m+1}\left|\frac{y^{(m+1)}(\xi)}{(m+1)!}\right| = O(h^{m+1})\]
+   
+    as the $(m+1)^{th}$ order derivative is bounded hence the term in the modulus operator is bounded and the $m^{th}$ order taylor series expansion has the order of $m$ for all $m \in \{1, 2, ... \}$ 
+  \item
+    \textbf{use the above theorem to prove that euler scheme has an order of 1.}
+    \newline
+    \newline
+    we consider the first order expansion for the function $y(t)$ around the point $t_n$ which is given by :
+    \[y(t_{n+1})= y(t_n+h) = y(t_n) + h y'(t_n) + \frac{h^2}{2!} y''(\xi) = y(t_n) + h f(t_n, y(t_n)) + \frac{h^2}{2!} y''(\xi) \]
+    
+    the euler estimate is given by $y_{n+1} = y_n + h\cdot f(t_n, y(t_n))$ if we compute the error term we have :
+    
+    \[ e_{n+1} = h^{2}\left|\frac{y''(\xi)}{(2)!}\right| = O(h^{2})\]
+    
+    hence by the order definition given in the problem we can conclude that the order of the euler method is $= 1$
+    
+
+
+\item 
+    
+    \textbf{the implicit mid point method converges to the solution with an order of 2}
+
+    let $t_{n}+\frac{h}{2} = t_{n+\frac{1}{2}}$ then we have $y(t_{n+1}) = y(t_n) + h \cdot f(t_{n+\frac{1}{2}},  \frac{1}{2}(y(t_n) + y(t_{n+1}) + \eta $ , where $\eta$ is the error term. we can observe that direct substitution of the first derivative to find the error is not possible in this case hence we modify the expression a little bit by introducing $\eta_1$
+    
+    \[y(t_{n+1}) = y(t_n) + h \cdot f\left(t_{n+\frac{1}{2}} ,  \frac{1}{2}(y(t_n) + y(t_{n+1}))\right) + \eta_1 + \eta \]
+    
+    using the lipschitz condition we can impose a bound on $\eta_1$ which is given by the following relation : 
+    
+    \[|\eta_1| =  h \left|f\left(t_{n+\frac{1}{2}},\frac{1}{2}(y(t_n)+y(t_{n+1})\right) - f\left(t_{n+\frac{1}{2}}, y(t_{n+\frac{1}{2}})\right) \right| \leq  \frac{1}{2} hL \left| y(t_{n}) + y(t_{n+1}) - 2 y(t_{n+\frac{1}{2}})\right|\]
+    
+    consider the taylor's expansion at $t_n$ with $y = y(t_n)$ and we will have the following relation:
+    \[ |\eta_1| \leq \frac{1}{2}hL|y + (y+hy') - 2(y+hy') + O(h^2)| = O(h^3)\]
+     
+    substitute this bound back into the original expression to get the actual bout for $\eta$ as follows:
+    
+    \[|\eta| \leq |\eta_1| + O(h^3) = O(h^3)\]
+    
+    hence the method has an order of convergence = 2 same as the explicit mid-point or trapezoidal rule. 
+\end{enumerate}
+
+
+
+
+\end{document}
